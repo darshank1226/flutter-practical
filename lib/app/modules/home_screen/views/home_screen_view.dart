@@ -85,38 +85,14 @@ class HomeScreenView extends GetView<HomeScreenController> {
               SizedBox(height: 5),
               Wrap(
                   children: controller.userData?.skills.map((skill) {
-                        final isSelected =
-                            controller.selectedSkills.contains(skill);
-
-                        final textColor =
-                            isSelected ? Colors.white : Colors.black;
-
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Obx(
-                            () => ChoiceChip(
-                              label: Text(
-                                skill,
-                                style: TextStyle(
-                                  color: textColor,
-                                ),
+                          child: Chip(
+                            label: Text(
+                              skill,
+                              style: TextStyle(
+                                color: AppColor.primaryColor,
                               ),
-                              selected:
-                                  controller.selectedSkills.contains(skill),
-                              onSelected: (selected) {
-                                if (selected) {
-                                  controller.selectedSkills.add(skill);
-                                  controller.setSkillColor(skill, Colors.black);
-                                  debugPrint(
-                                      'selectedSkills----${controller.selectedSkills}');
-                                } else {
-                                  controller.selectedSkills.remove(skill);
-                                  debugPrint(
-                                      'removeSkill---${controller.selectedSkills}');
-                                  controller.setSkillColor(skill, Colors.grey);
-                                }
-                              },
-                              selectedColor: controller.skillColors[skill],
                             ),
                           ),
                         );

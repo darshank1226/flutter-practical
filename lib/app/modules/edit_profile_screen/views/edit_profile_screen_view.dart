@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_prectical/app/routes/app_pages.dart';
 import 'package:flutter_prectical/utils/colors.dart';
 import 'package:flutter_prectical/widget/button_widget.dart';
 
@@ -105,11 +106,13 @@ class EditProfileScreenView extends GetView<EditProfileScreenController> {
                     borderRadius: 0,
                     backgroundColor: AppColor.primaryColor,
                     onPressed: () {
+                      controller.updateProfile();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Profile Updated Successfully'),
                         ),
                       );
+                      Get.toNamed(Routes.HOME_SCREEN);
                     })
               ],
             ),
@@ -128,14 +131,13 @@ class EditProfileScreenView extends GetView<EditProfileScreenController> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(true); // Return true to allow leaving
+                Navigator.of(context).pop(true);
               },
               child: Text('Yes'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context)
-                    .pop(false); // Return false to stay on the page
+                Navigator.of(context).pop(false);
               },
               child: Text('No'),
             ),
@@ -144,6 +146,6 @@ class EditProfileScreenView extends GetView<EditProfileScreenController> {
       },
     );
 
-    return result ?? false; // Return false if result is null
+    return result ?? false;
   }
 }

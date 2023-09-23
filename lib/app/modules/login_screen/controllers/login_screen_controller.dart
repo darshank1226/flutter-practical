@@ -98,7 +98,7 @@ class LoginScreenController extends GetxController {
 
           print("hivedata-------${userBox.length}");
 
-          Get.offNamed(Routes.HOME_SCREEN);
+          Get.toNamed(Routes.HOME_SCREEN);
         }
       } catch (error) {
         debugPrint(error.toString());

@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 class EditProfileScreenController extends GetxController {
   late final Box<UserData> userBox;
   late final UserData userData;
+  final isLoading = false.obs;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController skillsController = TextEditingController();
@@ -24,16 +25,18 @@ class EditProfileScreenController extends GetxController {
 
     nameController = TextEditingController(text: userData?.name ?? "");
     emailController = TextEditingController(text: userData?.email ?? "");
-
+    skillsController =
+        TextEditingController(text: userData?.skills.join(',') ?? "");
     workExperienceController =
         TextEditingController(text: userData?.workExperience ?? "");
+    update();
   }
 
   void updateProfile() async {
+    isLoading.value = true;
     final userBox = await Hive.openBox<UserData>('userBox');
     final userData = userBox.get('current_user');
 
-    // Create an updated user data object
     final updatedUserData = UserData(
       avatarUrl: avatarImage.toString(),
       name: nameController.text,
@@ -42,8 +45,14 @@ class EditProfileScreenController extends GetxController {
       workExperience: workExperienceController.text,
     );
 
-    // Update the user data in Hive
     userBox.put('current_user', updatedUserData);
+
+    print("name------------${updatedUserData.name}");
+    print("email------------${updatedUserData.email}");
+    print("workExperience------------${updatedUserData.workExperience}");
+    print("avatarUrl------------${updatedUserData.avatarUrl}");
+    print("skills------------${updatedUserData.skills}");
+    isLoading.value = false;
   }
 
   void setAvatarImage(File image) {
