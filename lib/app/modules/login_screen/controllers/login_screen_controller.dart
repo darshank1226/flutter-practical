@@ -3,15 +3,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_prectical/app/routes/app_pages.dart';
+import 'package:flutter_prectical/models/user_models.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreenController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final formKey = GlobalKey<FormState>();
-
+  var isPasswordVisible = false.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final rememberMe = false.obs;
@@ -34,18 +36,16 @@ class LoginScreenController extends GetxController {
   }
 
   String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Email is required';
-    }
-    if (!GetUtils.isEmail(value)) {
-      return 'Enter a valid email address';
+    const emailPattern = r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$';
+    if (!RegExp(emailPattern).hasMatch(value!)) {
+      return 'Please check email id';
     }
     return null;
   }
 
   String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Password is required';
+    if (value!.length < 8) {
+      return 'Password must be 8 characters long';
     }
     return null;
   }
@@ -54,24 +54,55 @@ class LoginScreenController extends GetxController {
     rememberMe.value = value;
   }
 
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
   void login() async {
-    try {
-      final user = await _auth.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
+    final isValid = formKey.currentState!.validate();
+    if (isValid) {
+      try {
+        final user = await _auth.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
 
-      if (user != null) {
-        if (rememberMe.value) {
-          final prefs = await SharedPreferences.getInstance();
-          prefs.setString('email', emailController.text.trim());
-          prefs.setString('password', passwordController.text.trim());
+        if (user != null) {
+          if (rememberMe.value) {
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setString('email', emailController.text.trim());
+            prefs.setString('password', passwordController.text.trim());
+          }
+
+          UserData defaultUser = UserData(
+            avatarUrl:
+                'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-person-icon.png',
+            name: 'Test',
+            email: 'testdev@gmail.com',
+            skills: [
+              "Flutter",
+              "Dart",
+              "GetX",
+              "Bloc",
+              "Firebase",
+              "Stripe",
+              "Agora",
+              "Twillio",
+              "Hive",
+              "Google Map API"
+            ],
+            workExperience: '5+ Years',
+          );
+          final userBox = await Hive.openBox<UserData>('userBox');
+          userBox.put('current_user', defaultUser);
+
+          print("hivedata-------${userBox.length}");
+
+          Get.offNamed(Routes.HOME_SCREEN);
         }
-
-        Get.offNamed(Routes.HOME_SCREEN);
+      } catch (error) {
+        debugPrint(error.toString());
       }
-    } catch (error) {
-      debugPrint(error.toString());
     }
   }
 
@@ -90,5 +121,11 @@ class LoginScreenController extends GetxController {
 
       if (rememberMe.value) {}
     } catch (error) {}
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
   }
 }

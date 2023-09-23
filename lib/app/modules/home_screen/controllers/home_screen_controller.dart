@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_prectical/models/user_models.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeScreenController extends GetxController {
-  final RxList availableSkills = [
-    "Flutter",
-    "Dart",
-    "GetX",
-    "Bloc",
-    "Firebase",
-    "Stripe",
-    "Agora",
-    "Twillio",
-    "Hive",
-    "Google Map API"
-  ].obs;
+  late final Box<UserData> userBox; // Declare it as a late variable
+  UserData? userData;
 
   final RxList selectedSkills = [].obs;
+
   final Map<String, Color> skillColors = {};
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    for (final skill in availableSkills) {
-      skillColors[skill] = Colors.grey;
-    }
+    userBox =
+        await Hive.openBox<UserData>('userBox'); // Initialize it in onInit
+    userData = userBox.get('current_user');
+    print('userData:------------- ${userData!.name.toString()}');
   }
 
   void setSkillColor(String skill, Color color) {

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+//ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_prectical/app/routes/app_pages.dart';
@@ -58,7 +58,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
               ),
               SizedBox(height: 5),
               Text(
-                'Darshan',
+                controller.userData?.name ?? "",
                 style: TextStyle(fontSize: 18, color: AppColor.greyColor),
               ),
               SizedBox(height: 10),
@@ -71,7 +71,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
               ),
               SizedBox(height: 5),
               Text(
-                'kachhadiyadarshan90@gmail.com',
+                controller.userData?.email ?? "",
                 style: TextStyle(fontSize: 18, color: AppColor.greyColor),
               ),
               SizedBox(height: 10),
@@ -83,43 +83,45 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 ),
               ),
               SizedBox(height: 5),
-              Obx(
-                () => Wrap(
-                  children: controller.availableSkills.map((skill) {
-                    final isSelected =
-                        controller.selectedSkills.contains(skill);
+              Wrap(
+                  children: controller.userData?.skills.map((skill) {
+                        final isSelected =
+                            controller.selectedSkills.contains(skill);
 
-                    final textColor = isSelected ? Colors.white : Colors.black;
+                        final textColor =
+                            isSelected ? Colors.white : Colors.black;
 
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: ChoiceChip(
-                        label: Text(
-                          skill,
-                          style: TextStyle(
-                            color: textColor,
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Obx(
+                            () => ChoiceChip(
+                              label: Text(
+                                skill,
+                                style: TextStyle(
+                                  color: textColor,
+                                ),
+                              ),
+                              selected:
+                                  controller.selectedSkills.contains(skill),
+                              onSelected: (selected) {
+                                if (selected) {
+                                  controller.selectedSkills.add(skill);
+                                  controller.setSkillColor(skill, Colors.black);
+                                  debugPrint(
+                                      'selectedSkills----${controller.selectedSkills}');
+                                } else {
+                                  controller.selectedSkills.remove(skill);
+                                  debugPrint(
+                                      'removeSkill---${controller.selectedSkills}');
+                                  controller.setSkillColor(skill, Colors.grey);
+                                }
+                              },
+                              selectedColor: controller.skillColors[skill],
+                            ),
                           ),
-                        ),
-                        selected: controller.selectedSkills.contains(skill),
-                        onSelected: (selected) {
-                          if (selected) {
-                            controller.selectedSkills.add(skill);
-                            controller.setSkillColor(skill, Colors.black);
-                            debugPrint(
-                                'selectedSkills----${controller.selectedSkills}');
-                          } else {
-                            controller.selectedSkills.remove(skill);
-                            debugPrint(
-                                'removeSkill---${controller.selectedSkills}');
-                            controller.setSkillColor(skill, Colors.grey);
-                          }
-                        },
-                        selectedColor: controller.skillColors[skill],
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+                        );
+                      }).toList() ??
+                      []),
               SizedBox(height: 20),
               Text(
                 'Work Experience:',
@@ -130,7 +132,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
               ),
               SizedBox(height: 5),
               Text(
-                '5 + Years',
+                controller.userData?.workExperience ?? "",
                 style: TextStyle(fontSize: 18, color: AppColor.greyColor),
               ),
               SizedBox(height: 20),

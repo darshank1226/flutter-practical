@@ -31,7 +31,7 @@ class LogoutAlertDialogueWidget extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Get.toNamed(Routes.LOGIN_SCREEN);
+            Get.offAndToNamed(Routes.LOGIN_SCREEN);
           },
           child: CommonText(
             text: "Yes",
