@@ -1,0 +1,32 @@
+name: flutter_prectical
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get_cli: ^1.8.4
+  firebase_auth: ^4.10.0
+  firebase_core: ^2.16.0
+  get: ^4.6.6
+  google_sign_in: ^6.1.5
+  cloud_firestore: ^4.9.2
+  fluttertoast: ^8.2.2
+  shared_preferences: ^2.2.1
+  path_provider: ^2.1.1
+  image_picker: ^1.0.4
+  sqflite: ^2.3.0
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  assets: 
+    - assets/
+  uses-material-design: true
