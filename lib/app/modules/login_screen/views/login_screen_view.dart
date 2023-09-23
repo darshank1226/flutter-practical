@@ -64,7 +64,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                         activeColor: AppColor.primaryColor,
                         value: controller.rememberMe.value,
                         onChanged: (value) =>
-                            controller.rememberMe.value = value!,
+                            controller.toggleRememberMe(value!),
                       ),
                     ),
                     Text('Remember Me'),

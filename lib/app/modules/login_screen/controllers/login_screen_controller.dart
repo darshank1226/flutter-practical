@@ -17,12 +17,19 @@ class LoginScreenController extends GetxController {
   final rememberMe = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    // Load saved login information if 'Remember Me' is selected
-    if (rememberMe.value) {
-      emailController.text = 'Load saved email here'; // Load saved email
-      passwordController.text = 'Load saved name here'; // Load saved name
+
+    final prefs = await SharedPreferences.getInstance();
+    final savedEmail = prefs.getString('email');
+    final savedPassword = prefs.getString('password');
+
+    if (savedEmail != null) {
+      emailController.text = savedEmail;
+    }
+
+    if (savedPassword != null) {
+      passwordController.text = savedPassword;
     }
   }
 
@@ -81,13 +88,7 @@ class LoginScreenController extends GetxController {
       final results = await _auth.signInWithCredential(credential);
       debugPrint('results---------${results.toString()}');
 
-      if (rememberMe.value) {
-        // Save login information
-        // You can use shared preferences or another storage method
-      }
-      // Navigate to the user profile screen or perform other actions
-    } catch (error) {
-      // Handle Google login error
-    }
+      if (rememberMe.value) {}
+    } catch (error) {}
   }
 }

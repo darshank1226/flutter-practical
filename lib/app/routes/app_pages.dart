@@ -6,8 +6,6 @@ import '../modules/home_screen/bindings/home_screen_binding.dart';
 import '../modules/home_screen/views/home_screen_view.dart';
 import '../modules/login_screen/bindings/login_screen_binding.dart';
 import '../modules/login_screen/views/login_screen_view.dart';
-import '../modules/signup_screen/bindings/signup_screen_binding.dart';
-import '../modules/signup_screen/views/signup_screen_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -28,11 +26,6 @@ class AppPages {
       name: _Paths.LOGIN_SCREEN,
       page: () => const LoginScreenView(),
       binding: LoginScreenBinding(),
-    ),
-    GetPage(
-      name: _Paths.SIGNUP_SCREEN,
-      page: () => const SignupScreenView(),
-      binding: SignupScreenBinding(),
     ),
     GetPage(
       name: _Paths.EDIT_PROFILE_SCREEN,

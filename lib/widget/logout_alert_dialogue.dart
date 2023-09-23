@@ -12,8 +12,7 @@ class LogoutAlertDialogueWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(10), // Set the desired border radius here.
+        borderRadius: BorderRadius.circular(10),
       ),
       title: Text("Logout"),
       content: CommonText(
