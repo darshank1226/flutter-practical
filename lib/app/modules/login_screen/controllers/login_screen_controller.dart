@@ -73,31 +73,9 @@ class LoginScreenController extends GetxController {
             prefs.setString('email', emailController.text.trim());
             prefs.setString('password', passwordController.text.trim());
           }
+          userDataLoad();
 
-          UserData defaultUser = UserData(
-            avatarUrl:
-                'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-person-icon.png',
-            name: 'Test',
-            email: 'testdev@gmail.com',
-            skills: [
-              "Flutter",
-              "Dart",
-              "GetX",
-              "Bloc",
-              "Firebase",
-              "Stripe",
-              "Agora",
-              "Twillio",
-              "Hive",
-              "Google Map API"
-            ],
-            workExperience: '5+ Years',
-          );
-          final userBox = await Hive.openBox<UserData>('userBox');
-          userBox.put('current_user', defaultUser);
-
-          print("hivedata-------${userBox.length}");
-
+          update();
           Get.toNamed(Routes.HOME_SCREEN);
         }
       } catch (error) {
@@ -123,9 +101,27 @@ class LoginScreenController extends GetxController {
     } catch (error) {}
   }
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
+  void userDataLoad() async {
+    UserData defaultUser = UserData(
+      avatarUrl:
+          'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-person-icon.png',
+      name: 'Test',
+      email: 'testdev@gmail.com',
+      skills: [
+        "Flutter",
+        "Dart",
+        "GetX",
+        "Bloc",
+        "Firebase",
+        "Stripe",
+        "Agora",
+        "Twillio",
+        "Hive",
+        "Google Map API"
+      ],
+      workExperience: '5+ Years',
+    );
+    final userBox = await Hive.openBox<UserData>('userBox');
+    userBox.put('current_user', defaultUser);
   }
 }

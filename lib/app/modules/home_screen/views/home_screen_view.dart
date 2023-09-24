@@ -1,4 +1,4 @@
-//ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+//ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
 import 'package:flutter_prectical/app/routes/app_pages.dart';
@@ -45,7 +45,8 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   padding: EdgeInsets.all(20.0),
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage("assets/man.png"),
+                    backgroundImage: NetworkImage(
+                        'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'),
                   ),
                 ),
               ),
@@ -57,9 +58,11 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 ),
               ),
               SizedBox(height: 5),
-              Text(
-                controller.userData?.name ?? "",
-                style: TextStyle(fontSize: 18, color: AppColor.greyColor),
+              Obx(
+                () => Text(
+                  controller.userData.value?.name ?? "",
+                  style: TextStyle(fontSize: 18, color: AppColor.greyColor),
+                ),
               ),
               SizedBox(height: 10),
               Text(
@@ -70,9 +73,11 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 ),
               ),
               SizedBox(height: 5),
-              Text(
-                controller.userData?.email ?? "",
-                style: TextStyle(fontSize: 18, color: AppColor.greyColor),
+              Obx(
+                () => Text(
+                  controller.userData.value?.email ?? "",
+                  style: TextStyle(fontSize: 18, color: AppColor.greyColor),
+                ),
               ),
               SizedBox(height: 10),
               Text(
@@ -83,8 +88,8 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 ),
               ),
               SizedBox(height: 5),
-              Wrap(
-                  children: controller.userData?.skills.map((skill) {
+              Obx(() => Wrap(
+                  children: controller.userData.value?.skills.map((skill) {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Chip(
@@ -97,7 +102,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                           ),
                         );
                       }).toList() ??
-                      []),
+                      [])),
               SizedBox(height: 20),
               Text(
                 'Work Experience:',
@@ -107,9 +112,11 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 ),
               ),
               SizedBox(height: 5),
-              Text(
-                controller.userData?.workExperience ?? "",
-                style: TextStyle(fontSize: 18, color: AppColor.greyColor),
+              Obx(
+                () => Text(
+                  controller.userData.value?.workExperience ?? "",
+                  style: TextStyle(fontSize: 18, color: AppColor.greyColor),
+                ),
               ),
               SizedBox(height: 20),
               Spacer(),

@@ -1,19 +1,21 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart'; // Import your UserData model
 import 'package:flutter_prectical/models/user_models.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeScreenController extends GetxController {
-  late final Box<UserData> userBox;
-  UserData? userData;
-
+  Box<UserData>? userBox;
+  Rx<UserData?> userData = Rx<UserData?>(null);
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    userBox = await Hive.openBox<UserData>('userBox');
-    userData = userBox.get('current_user');
+    getUserData();
+    debugPrint('----dataupdate----');
+  }
 
-    debugPrint('----data update----');
-    update();
+  void getUserData() async {
+    userBox = await Hive.openBox<UserData>('userBox');
+    userData.value = userBox!.get('current_user');
+    debugPrint("---name${userData.value!.name}");
   }
 }
