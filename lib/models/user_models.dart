@@ -12,7 +12,7 @@ class UserData extends HiveObject {
   final String email;
 
   @HiveField(3)
-  final List<String> skills;
+  List<String> skills;
 
   @HiveField(4)
   final String workExperience;
@@ -43,5 +43,14 @@ class UserData extends HiveObject {
       'skills': skills,
       'workExperience': workExperience,
     };
+  }
+
+  List<String>? getSkills() {
+    return skills;
+  }
+
+  // Setter for skills
+  void setSkills(List<String>? newSkills) {
+    skills = newSkills!;
   }
 }

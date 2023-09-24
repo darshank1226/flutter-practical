@@ -13,6 +13,8 @@ class LoginScreenController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> emailFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> passwordFormKey = GlobalKey<FormState>();
   var isPasswordVisible = false.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -74,6 +76,16 @@ class LoginScreenController extends GetxController {
             prefs.setString('password', passwordController.text.trim());
           }
           userDataLoad();
+          Get.snackbar(
+            'Login Successful',
+            'You have successfully logged in.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.grey.withOpacity(0.5),
+            colorText: Colors.white,
+            duration: Duration(seconds: 2),
+            borderRadius: 10,
+            margin: EdgeInsets.all(10),
+          );
 
           update();
           Get.toNamed(Routes.HOME_SCREEN);
@@ -119,7 +131,7 @@ class LoginScreenController extends GetxController {
         "Hive",
         "Google Map API"
       ],
-      workExperience: '5+ Years',
+      workExperience: '5',
     );
     final userBox = await Hive.openBox<UserData>('userBox');
     userBox.put('current_user', defaultUser);

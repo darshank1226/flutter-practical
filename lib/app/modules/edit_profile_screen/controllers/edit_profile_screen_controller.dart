@@ -35,7 +35,10 @@ class EditProfileScreenController extends GetxController {
       avatarUrl: avatarImage.value?.toString() ?? userData?.avatarUrl ?? "",
       name: nameController.text,
       email: emailController.text,
-      skills: userData?.skills ?? [],
+      skills: skillsController.text
+          .split(',')
+          .where((skill) => skill.isNotEmpty)
+          .toList(),
       workExperience: workExperienceController.text,
     );
 
