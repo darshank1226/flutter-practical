@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart'; // Import your UserData model
+import 'package:flutter/widgets.dart';
 import 'package:flutter_prectical/models/user_models.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
