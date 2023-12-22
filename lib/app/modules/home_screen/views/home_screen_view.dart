@@ -144,7 +144,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                     style: TextStyle(fontSize: 18, color: Colors.grey.shade400),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Spacer(),
                 CommonElevatedButton(
                   buttonText: "Edit Profile",
@@ -155,7 +155,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   borderRadius: 0,
                   fontSize: 16,
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
               ],
             ),
           ),
